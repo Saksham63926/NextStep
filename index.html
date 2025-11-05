@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextStep - Find Your Perfect Internship</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header (hidden initially) -->
+    <header id="app-header" class="app-header hidden">
+        <div class="header-container">
+            <div class="header-left">
+                <h1 class="logo">NextStep</h1><h1 class="icon-logo"><img src="E:\Screenshot 2025-11-05 124804.png" width="100" height="50" ></h1>
+            <nav class="header-nav">
+                <button id="nav-dashboard" class="nav-link">Dashboard</button>
+                <button id="nav-internships" class="nav-link">Browse Internships</button>
+                <button id="nav-applications" class="nav-link">My Applications</button>
+                <button id="nav-learning" class="nav-link">Learning Resources</button>
+                <button id="nav-help" class="nav-link">Help &amp; Support</button>
+            </nav>
+            <div class="header-right">
+                <span id="user-name-display" class="user-name"></span>
+                <button id="logout-btn" class="btn btn--outline btn--sm">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Auth Page -->
+        <div id="auth-page" class="page-container">
+            <div class="auth-container">
+                <div class="auth-card card">
+                    <div class="auth-header">
+                        <h2 id="auth-title">Welcome to NextStep</h2>
+                        <p class="auth-subtitle">Sign in to discover internships tailored to your skills</p>
+                    </div>
+                    <div class="auth-body">
+                        <!-- Tab Toggle -->
+                        <div class="auth-tabs">
+                            <button id="login-tab" class="auth-tab active">Login</button>
+                            <button id="register-tab" class="auth-tab">Register</button>
+                        </div>
+
+                        <!-- Login Form -->
+                        <form id="login-form" class="auth-form">
+                            <div class="form-group">
+                                <label class="form-label" for="login-email">Email</label>
+                                <input type="email" id="login-email" class="form-control" placeholder="your@email.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="login-password">Password</label>
+                                <input type="password" id="login-password" class="form-control" placeholder="Enter your password" required>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" id="remember-me" class="form-check-input">
+                                <label for="remember-me" class="form-check-label">Remember me</label>
+                            </div>
+                            <div id="login-error" class="error-message hidden"></div>
+                            <button type="submit" class="btn btn--primary btn--full-width">Login</button>
+                        </form>
+
+                        <!-- Register Form -->
+                        <form id="register-form" class="auth-form hidden">
+                            <div class="form-group">
+                                <label class="form-label" for="register-name">Full Name</label>
+                                <input type="text" id="register-name" class="form-control" placeholder="Enter Full Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="register-email">Email</label>
+                                <input type="email" id="register-email" class="form-control" placeholder="@gmail.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="register-password">Password</label>
+                                <input type="password" id="register-password" class="form-control" placeholder="Create a password" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="register-confirm-password">Confirm Password</label>
+                                <input type="password" id="register-confirm-password" class="form-control" placeholder="Confirm your password" required>
+                            </div>
+                            <div id="register-error" class="error-message hidden"></div>
+                            <button type="submit" class="btn btn--primary btn--full-width">Create Account</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills Selection Page -->
+        <div id="skills-page" class="page-container hidden">
+            <div class="skills-container">
+                <div class="skills-card card">
+                    <div class="skills-header">
+                        <h2>Select Your Skills</h2>
+                        <p class="skills-subtitle">Choose the skills you have mastered to get personalized internship recommendations</p>
+                        <div class="skills-counter">
+                            <span id="skills-count">Selected: 0 skills</span>
+                        </div>
+                    </div>
+                    <div class="skills-body">
+                        <div id="skills-categories"></div>
+                        <div id="skills-error" class="error-message hidden"></div>
+                        <button id="continue-skills-btn" class="btn btn--primary btn--lg btn--full-width">Continue to Internships</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div id="dashboard-page" class="page-container hidden">
+            <div class="dashboard-container">
+                <div class="welcome-section">
+                    <h2 id="dashboard-welcome">Welcome back!</h2>
+                    <p id="dashboard-subtitle" class="dashboard-subtitle"></p>
+                </div>
+                <div class="dashboard-stats">
+                    <div class="stat-card card">
+                        <video autoplay loop muted class="stat-video">
+                            <source src="" type="video/mp4">
+                        </video>
+                        <h3 id="stat-skills">0</h3>
+                        <p>Skills Selected</p>
+                    </div>
+                    <div class="stat-card card">
+                        <h3 id="stat-internships">0</h3>
+                        <p>Internships Available</p>
+                    </div>
+                </div>
+                <div class="dashboard-skills">
+                    <h3>Your Selected Skills</h3>
+                    <div id="dashboard-skills-list" class="skills-tag-list"></div>
+                </div>
+                <div class="dashboard-actions">
+                    <button id="view-internships-btn" class="btn btn--primary btn--lg">View Internships</button>
+                    <button id="manage-skills-btn" class="btn btn--secondary btn--lg">Manage Skills</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills Gap Analysis Page -->
+        <div id="skills-gap-page" class="page-container hidden">
+            <div class="skills-gap-container">
+                <div class="skills-gap-header">
+                    <h2>Skills Gap Analysis</h2>
+                    <p class="skills-gap-subtitle">Here's what you need to learn for <span id="gap-internship-title"></span></p>
+                </div>
+                <div class="skills-gap-content">
+                    <div class="skills-comparison">
+                        <div class="skills-section has-skills">
+                            <h3>✓ Your Skills</h3>
+                            <div id="has-skills-list" class="skills-list"></div>
+                        </div>
+                        <div class="skills-section missing-skills">
+                            <h3>⚠ Skills to Learn</h3>
+                            <div id="missing-skills-list" class="skills-list"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skills-gap-actions">
+                    <button id="back-to-internships-btn" class="btn btn--secondary btn--lg">Back to Internships</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learning Resources Page -->
+        <div id="learning-page" class="page-container hidden">
+            <div class="learning-container">
+                <div class="learning-header">
+                    <h2>Learning Resources</h2>
+                    <p class="learning-subtitle">Curated courses and tutorials to master any skill</p>
+                </div>
+                <div class="learning-search">
+                    <input type="text" id="learning-search" class="form-control" placeholder="Search for a skill...">
+                </div>
+                <div id="learning-grid" class="learning-grid"></div>
+                <div id="no-learning" class="no-results hidden">
+                    <p>No learning resources found for your search.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Applications Page -->
+        <div id="applications-page" class="page-container hidden">
+            <div class="applications-container">
+                <div class="applications-header">
+                    <h2>My Applications</h2>
+                    <p class="applications-subtitle">Track all your internship applications</p>
+                </div>
+                <div class="applications-filters">
+                    <button class="filter-btn active" data-status="all">All</button>
+                    <button class="filter-btn" data-status="Applied">Applied</button>
+                    <button class="filter-btn" data-status="Under Review">Under Review</button>
+                    <button class="filter-btn" data-status="Accepted">Accepted</button>
+                    <button class="filter-btn" data-status="Rejected">Rejected</button>
+                </div>
+                <div id="applications-list" class="applications-list"></div>
+                <div id="no-applications" class="no-results hidden">
+                    <p>You haven't applied to any internships yet. Start exploring!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Helpdesk Page -->
+        <div id="helpdesk-page" class="page-container hidden">
+            <div class="helpdesk-container">
+                <div class="helpdesk-header">
+                    <h2>Help &amp; Support</h2>
+                    <p class="helpdesk-subtitle">We're here to help you succeed</p>
+                </div>
+                <div class="helpdesk-content">
+                    <div class="faq-section">
+                        <h3>Frequently Asked Questions</h3>
+                        <div id="faq-list" class="faq-list"></div>
+                    </div>
+                    <div class="contact-section card">
+                        <h3>Contact Support</h3>
+                        <form id="contact-form" class="contact-form">
+                            <div class="form-group">
+                                <label class="form-label" for="contact-subject">Subject</label>
+                                <select id="contact-subject" class="form-control" required>
+                                    <option value="">Select a topic</option>
+                                    <option value="Application Issues">Application Issues</option>
+                                    <option value="Skills & Learning">Skills &amp; Learning</option>
+                                    <option value="Technical Support">Technical Support</option>
+                                    <option value="Account & Profile">Account &amp; Profile</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="contact-message">Message</label>
+                                <textarea id="contact-message" class="form-control" rows="5" placeholder="Describe your issue..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn--primary btn--full-width">Submit Ticket</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Internships Listing Page -->
+        <div id="internships-page" class="page-container hidden">
+            <div class="internships-layout">
+                <!-- Filters Sidebar -->
+                <aside class="filters-sidebar">
+                    <div class="filters-card card">
+                        <h3>Filters</h3>
+                        <div class="filter-section">
+                            <h4>Type</h4>
+                            <div class="filter-options">
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="filter-paid" checked>
+                                    <span>Paid Internships</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" id="filter-unpaid" checked>
+                                    <span>Unpaid Internships</span>
+                                </label>
+                            </div>
+                        </div>
+                        <button id="reset-filters-btn" class="btn btn--outline btn--sm btn--full-width">Reset Filters</button>
+                    </div>
+                </aside>
+
+                <!-- Internships Grid -->
+                <div class="internships-main">
+                    <div class="internships-header">
+                        <h2>Available Internships</h2>
+                        <p id="internships-count" class="internships-count">Showing 0 internships</p>
+                    </div>
+                    <div id="internships-grid" class="internships-grid"></div>
+                    <div id="no-internships" class="no-results hidden">
+                        <p>No internships match your current filters. Try adjusting your criteria.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Internship Detail Modal -->
+    <div id="internship-modal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content card">
+            <button class="modal-close" id="modal-close-btn">&times;</button>
+            <div class="modal-body">
+                <div class="modal-header-section">
+                    <h2 id="modal-company" class="modal-company"></h2>
+                    <h3 id="modal-title" class="modal-title"></h3>
+                </div>
+                <div class="modal-match">
+                    <span class="match-badge" id="modal-match"></span>
+                </div>
+                <div class="modal-details">
+                    <div class="detail-item">
+                        <strong>Duration:</strong>
+                        <span id="modal-duration"></span>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Stipend:</strong>
+                        <span id="modal-stipend"></span>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Available Spots:</strong>
+                        <span id="modal-spots"></span>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Location:</strong>
+                        <span id="modal-location"></span>
+                    </div>
+                </div>
+                <div class="modal-section">
+                    <h4>Required Skills</h4>
+                    <div id="modal-skills" class="skills-tag-list"></div>
+                </div>
+                <div class="modal-section">
+                    <h4>About the Role</h4>
+                    <p id="modal-description"></p>
+                </div>
+                <button id="modal-apply-btn" class="btn btn--primary btn--lg btn--full-width">Apply Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Message Toast -->
+    <div id="success-toast" class="toast hidden">
+        <span id="toast-message"></span>
+    </div>
+
+    <!-- Floating Helpdesk Chat Widget -->
+    <div id="helpdesk-widget" class="helpdesk-widget hidden">
+        <button id="helpdesk-toggle" class="helpdesk-toggle">
+            <span class="helpdesk-icon">💬</span>
+        </button>
+        <div id="helpdesk-chat" class="helpdesk-chat hidden">
+            <div class="helpdesk-chat-header">
+                <h4>Support Chat</h4>
+                <button id="helpdesk-chat-close" class="helpdesk-chat-close">×</button>
+            </div>
+            <div id="helpdesk-chat-messages" class="helpdesk-chat-messages">
+                <div class="chat-message bot-message">
+                    <p>Hello! How can I help you today?</p>
+                </div>
+            </div>
+            <div class="helpdesk-chat-input">
+                <input type="text" id="helpdesk-input" class="form-control" placeholder="Type your message...">
+                <button id="helpdesk-send" class="btn btn--primary btn--sm">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
